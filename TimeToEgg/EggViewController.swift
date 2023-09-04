@@ -17,7 +17,7 @@ final class EggViewController: UIViewController {
     private var totalTime = 0
     private var timer: Timer?
     private var player: AVAudioPlayer?
-    private let hardnessTime = ["Soft": 5, "Medium": 8, "Hard": 12]
+    private let hardnessTime = ["Soft": 5*60, "Medium": 8*60, "Hard": 12*60]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,11 +59,11 @@ private extension EggViewController {
         
         switch selectedSoftness {
         case "Soft" :
-            counter = 5*60
+            counter = hardnessTime["Soft"]!
         case "Medium" :
-            counter = 8*60
+            counter = hardnessTime["Medium"]!
         case "Hard" :
-            counter = 12*60
+            counter = hardnessTime["Hard"]!
         default:
             print("check your code")
         }
