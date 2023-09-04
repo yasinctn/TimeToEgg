@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 final class EggViewController: UIViewController {
     
@@ -15,6 +16,7 @@ final class EggViewController: UIViewController {
     private var counter = 0
     private var totalTime = 0
     private var timer: Timer?
+    private var player: AVAudioPlayer?
     private let hardnessTime = ["Soft": 5, "Medium": 8, "Hard": 12]
     
     override func viewDidLoad() {
@@ -37,6 +39,14 @@ final class EggViewController: UIViewController {
 // MARK: - Methods
 
 private extension EggViewController {
+    
+    func playAudio(name:String) throws {
+            
+            if let url = Bundle.main.url(forResource: name, withExtension: "mp3") {
+                player = try AVAudioPlayer(contentsOf: url)
+                player?.play()
+            }
+        }
     
     func startTimer() {
         if (timer == nil || timer?.isValid == false) {
@@ -67,6 +77,12 @@ private extension EggViewController {
             updateInfoLabel(text: "\(counter/60) minute\n\(counter%60) second")
             counter -= 1
         }else {
+            
+            do{
+                try playAudio(name: "alarm")
+            }catch {
+                print("Sound Error")
+            }
             setProgress(progress: 0.0)
             timer?.invalidate()
             updateInfoLabel(text: "Egg ready\nEnjoy your meal")
